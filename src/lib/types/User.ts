@@ -4,3 +4,8 @@ export interface User {
   lastName: string;
   createdAt: string;
 }
+
+export interface IToken {
+  refresh: string;
+  access: string;
+}

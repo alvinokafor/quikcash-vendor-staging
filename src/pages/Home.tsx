@@ -1,26 +1,28 @@
-import { Heading } from "@radix-ui/themes";
 import { SEOWrapper, AppLayout } from "@/layouts";
-import { useExampleQuery, ExampleAdapter } from "@/adapters/ExampleAdapter";
-import { queryKeys } from "@/lib/constants";
+import { Box } from "@chakra-ui/react";
+import {
+  DasboardSummaryCards,
+  TransactionsSummary,
+  VendorRevenueSummary,
+} from "@/components/dashboard/modules";
+import { DistrictSalesSummaryTable } from "@/components/dashboard/ui";
 
 const metaData = {
-  title: "React Starter Project",
-  name: "description",
-  content: "React Starter Project",
+  title: "QuikCash :: Dashboard",
+  name: "QuikCash :: Dashboard",
+  content: "QuikCash :: Dashboard",
 };
 
 export default function Home() {
-  //example of how to use the query adapter, this returns all the data from react query
-  const { data, isLoading, error, isError, ...rest } = useExampleQuery(
-    ExampleAdapter.exampleQueryApiCall1,
-    [queryKeys.EXAMPLE_KEY],
-    "" // pass in any params you may have
-  );
-
   return (
     <SEOWrapper metaData={metaData}>
       <AppLayout>
-        <Heading className="text-center">React Project Starter</Heading>
+        <Box className="space-y-8">
+          <DasboardSummaryCards />
+          <TransactionsSummary />
+          <VendorRevenueSummary />
+          <DistrictSalesSummaryTable />
+        </Box>
       </AppLayout>
     </SEOWrapper>
   );
