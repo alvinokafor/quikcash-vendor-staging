@@ -1,3 +1,4 @@
+import { Transaction } from "@/lib/types/Transactions";
 import {
   Heading,
   Flex,
@@ -12,8 +13,13 @@ import {
 } from "@chakra-ui/react";
 import { ClipboardIcon } from "@radix-ui/react-icons";
 import { Link } from "react-router-dom";
+import { getFormattedDate } from "@/utils";
 
-export default function TransactionInfo() {
+export default function TransactionInfo({
+  transaction,
+}: {
+  transaction: Transaction | undefined;
+}) {
   const toast = useToast();
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`ref`);
@@ -29,7 +35,7 @@ export default function TransactionInfo() {
     <Box className="space-y-4">
       <Flex alignItems={"center"} justifyContent={"space-between"}>
         <Flex gap={2}>
-          <Heading>#REF-SKK0202</Heading>
+          <Heading>{transaction?.transaction_ref}</Heading>
 
           <ClipboardIcon
             onClick={handleCopyLink}
@@ -52,19 +58,9 @@ export default function TransactionInfo() {
               gap={2}
             >
               <Heading size="xs" textTransform="uppercase">
-                Name
-              </Heading>
-              <Text fontSize="sm">Emeka Walter</Text>
-            </Flex>
-            <Flex
-              alignItems={"center"}
-              justifyContent={"space-between"}
-              gap={2}
-            >
-              <Heading size="xs" textTransform="uppercase">
                 Account Number
               </Heading>
-              <Text fontSize="sm">1093002011</Text>
+              <Text fontSize="sm">{transaction?.account}</Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -72,9 +68,9 @@ export default function TransactionInfo() {
               gap={2}
             >
               <Heading size="xs" textTransform="uppercase">
-                District
+                Transformer
               </Heading>
-              <Text fontSize="sm">OKADA</Text>
+              <Text fontSize="sm">{transaction?.transformer}</Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -84,7 +80,7 @@ export default function TransactionInfo() {
               <Heading size="xs" textTransform="uppercase">
                 Meter Number
               </Heading>
-              <Text fontSize="sm">12390002332</Text>
+              <Text fontSize="sm">{transaction?.meter}</Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -94,7 +90,7 @@ export default function TransactionInfo() {
               <Heading size="xs" textTransform="uppercase">
                 Customer Type
               </Heading>
-              <Text fontSize="sm">Prepaid</Text>
+              <Text fontSize="sm">{transaction?.customer_type}</Text>
             </Flex>
           </CardBody>
         </Card>
@@ -113,7 +109,26 @@ export default function TransactionInfo() {
                 Transaction ID
               </Heading>
               <Flex gap={2} alignItems={"center"}>
-                <Text fontSize="sm">JAKA40242</Text>
+                <Text fontSize="sm">{transaction?.transactionid}</Text>
+
+                <ClipboardIcon
+                  onClick={handleCopyLink}
+                  width={12}
+                  height={12}
+                  className="cursor-pointer"
+                />
+              </Flex>
+            </Flex>
+            <Flex
+              alignItems={"center"}
+              justifyContent={"space-between"}
+              gap={2}
+            >
+              <Heading size="xs" textTransform="uppercase">
+                SGC
+              </Heading>
+              <Flex gap={2} alignItems={"center"}>
+                <Text fontSize="sm">{transaction?.sgc}</Text>
 
                 <ClipboardIcon
                   onClick={handleCopyLink}
@@ -132,7 +147,7 @@ export default function TransactionInfo() {
                 Token
               </Heading>
               <Flex gap={2} alignItems={"center"}>
-                <Text fontSize="sm">0298392340258240242</Text>
+                <Text fontSize="sm">{transaction?.token}</Text>
 
                 <ClipboardIcon
                   onClick={handleCopyLink}
@@ -148,9 +163,9 @@ export default function TransactionInfo() {
               gap={2}
             >
               <Heading size="xs" textTransform="uppercase">
-                Units
+                Units (Kwh)
               </Heading>
-              <Text fontSize="sm">2040.5Kwh</Text>
+              <Text fontSize="sm">{transaction?.units}</Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -158,9 +173,9 @@ export default function TransactionInfo() {
               gap={2}
             >
               <Heading size="xs" textTransform="uppercase">
-                Gross Amount (NGN)
+                Amount (NGN)
               </Heading>
-              <Text fontSize="sm">12,000.00</Text>
+              <Text fontSize="sm">{transaction?.amount}</Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -168,9 +183,9 @@ export default function TransactionInfo() {
               gap={2}
             >
               <Heading size="xs" textTransform="uppercase">
-                Net Amount (NGN)
+                Amount Tendered (NGN)
               </Heading>
-              <Text fontSize="sm">11,000.00</Text>
+              <Text fontSize="sm">{transaction?.amount_tendered}</Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -181,7 +196,7 @@ export default function TransactionInfo() {
                 Vendor
               </Heading>
               <Link to={"/vendors/1"}>
-                <Text fontSize="sm">Crown</Text>
+                <Text fontSize="sm">{transaction?.vendor_name}</Text>
               </Link>
             </Flex>
             <Flex
@@ -192,7 +207,7 @@ export default function TransactionInfo() {
               <Heading size="xs" textTransform="uppercase">
                 Channel
               </Heading>
-              <Text fontSize="sm">App/PAGA</Text>
+              <Text fontSize="sm">{transaction?.channel}</Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -202,7 +217,11 @@ export default function TransactionInfo() {
               <Heading size="xs" textTransform="uppercase">
                 Date & Time
               </Heading>
-              <Text fontSize="sm">September 23, 2023 at 9:07PM</Text>
+              <Text fontSize="sm">
+                {transaction?.transaction_date
+                  ? getFormattedDate(transaction?.transaction_date!)
+                  : "No Date"}
+              </Text>
             </Flex>
             <Flex
               alignItems={"center"}
@@ -212,7 +231,17 @@ export default function TransactionInfo() {
               <Heading size="xs" textTransform="uppercase">
                 Status
               </Heading>
-              <Badge colorScheme="green">Success</Badge>
+              <Badge
+                colorScheme={
+                  transaction?.status?.toLowerCase() === "successful"
+                    ? "green"
+                    : transaction?.status?.toLowerCase() === "pending"
+                    ? "yellow"
+                    : "red"
+                }
+              >
+                {transaction?.status}
+              </Badge>
             </Flex>
           </CardBody>
         </Card>

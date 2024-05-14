@@ -7,6 +7,8 @@ import {
 } from "@/components/dashboard/modules";
 import { DistrictSalesSummaryTable } from "@/components/dashboard/ui";
 
+import { ProtectedRoute } from "@/utils";
+
 const metaData = {
   title: "QuikCash :: Dashboard",
   name: "QuikCash :: Dashboard",
@@ -15,15 +17,17 @@ const metaData = {
 
 export default function Home() {
   return (
-    <SEOWrapper metaData={metaData}>
-      <AppLayout>
-        <Box className="space-y-8">
-          <DasboardSummaryCards />
-          <TransactionsSummary />
-          <VendorRevenueSummary />
-          <DistrictSalesSummaryTable />
-        </Box>
-      </AppLayout>
-    </SEOWrapper>
+    <ProtectedRoute>
+      <SEOWrapper metaData={metaData}>
+        <AppLayout>
+          <Box className="space-y-8">
+            <DasboardSummaryCards />
+            <TransactionsSummary />
+            <VendorRevenueSummary />
+            <DistrictSalesSummaryTable />
+          </Box>
+        </AppLayout>
+      </SEOWrapper>
+    </ProtectedRoute>
   );
 }

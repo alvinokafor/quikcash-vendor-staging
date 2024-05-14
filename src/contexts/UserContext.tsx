@@ -4,7 +4,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { type User, type IToken } from "@/lib/types/User";
+import { type User } from "@/lib/types/User";
 
 interface IUserProvider {
   children: React.ReactNode;
@@ -12,17 +12,17 @@ interface IUserProvider {
 
 export interface IUserContext {
   user: User | null;
-  token: IToken | null;
+  token: string | null;
   isUserAuthenticated: () => boolean;
   setUser: Dispatch<SetStateAction<User | null>>;
-  setToken: Dispatch<SetStateAction<IToken | null>>;
+  setToken: Dispatch<SetStateAction<string | null>>;
 }
 
 const UserContext = createContext<IUserContext | null>(null);
 
 const UserProvider = ({ children }: IUserProvider) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<IToken | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   const isUserAuthenticated = () => !!user;
 

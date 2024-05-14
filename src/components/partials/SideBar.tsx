@@ -1,22 +1,9 @@
-import { useContext } from "react";
-import {
-  Box,
-  Flex,
-  Text,
-  Image,
-  Button,
-  Spacer,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Avatar,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, Image, Spacer } from "@chakra-ui/react";
 import { Payments, Dashboard, Customers, Settings } from "@/assets/icons";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
-import { UserContext, IUserContext } from "@/contexts/UserContext";
-import { QuestionMarkCircledIcon, ExitIcon } from "@radix-ui/react-icons";
+import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import Logout from "../auth/Logout";
 
 const navLinks = [
   { name: "Dashboard", link: "/dashboard", icon: <Dashboard /> },
@@ -27,7 +14,6 @@ const navLinks = [
 
 export default function SideBar() {
   const pathName = useLocation().pathname;
-  const { user } = useContext(UserContext) as IUserContext;
   return (
     <Box
       minH="100vh"
@@ -91,24 +77,7 @@ export default function SideBar() {
             </Box>
           </Link>
 
-          <Box
-            paddingInline={"12px"}
-            paddingBlock={"8px"}
-            borderRadius={"6px"}
-            _hover={{
-              bg: "gray.gray50",
-            }}
-            backgroundColor={pathName === "/help-center" ? "gray.gray50" : ""}
-            className="cursor-pointer"
-          >
-            <Flex alignItems={"center"}>
-              <Box mr={"12px"}>
-                <ExitIcon width={20} height={20} />
-              </Box>
-
-              <Text fontWeight={"medium"}>Logout</Text>
-            </Flex>
-          </Box>
+          <Logout />
         </Flex>
       </Flex>
     </Box>

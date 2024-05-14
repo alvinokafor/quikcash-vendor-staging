@@ -11,13 +11,59 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Select,
   InputGroup,
   InputLeftAddon,
+  useToast,
 } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  type FundVendorWalletSchema,
+  fundVendorWalletValidator,
+} from "@/lib/validations/vendorValidator";
+import { useVendorMutation, VendorAdapter } from "@/adapters/Vendors";
 
-export default function FundVendorModal() {
+export default function FundVendorModal({
+  vendorId,
+}: {
+  vendorId: number | undefined;
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FundVendorWalletSchema>({
+    resolver: zodResolver(fundVendorWalletValidator),
+  });
+
+  const { mutateAsync, isPending } = useVendorMutation(
+    VendorAdapter.fundVendorWallet,
+    ""
+  );
+
+  const handleFundVendorWallet = async (data: FundVendorWalletSchema) => {
+    try {
+      await mutateAsync({ amount: data.amount, reciever: vendorId });
+      toast({
+        position: "top-right",
+        title: `Vendor Wallet has been funded`,
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        position: "top-right",
+        //@ts-ignore
+        title: error.response.data.error,
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+    }
+  };
   return (
     <>
       <Button fontWeight={"medium"} onClick={onOpen}>
@@ -35,25 +81,25 @@ export default function FundVendorModal() {
           <ModalCloseButton />
           <ModalBody className="space-y-4" pb={6}>
             <FormControl>
-              <FormLabel>Select Vendor</FormLabel>
-              <Select variant="filled">
-                <option value="agent">Emeka Nkwo</option>
-                <option value="vendor">Alvin Chinedu</option>
-                <option value="cashier">Walter Ibe</option>
-              </Select>
-            </FormControl>
-
-            <FormControl>
               <FormLabel>Amount to Fund</FormLabel>
               <InputGroup>
                 <InputLeftAddon>NGN</InputLeftAddon>
-                <Input type="text" placeholder="Enter Amount to Fund" />
+                <Input
+                  {...register("amount")}
+                  type="text"
+                  placeholder="Enter Amount to Fund"
+                />
               </InputGroup>
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button
+              onClick={handleSubmit(handleFundVendorWallet)}
+              isLoading={isPending}
+              colorScheme="blue"
+              mr={3}
+            >
               Create
             </Button>
             <Button onClick={onClose}>Cancel</Button>

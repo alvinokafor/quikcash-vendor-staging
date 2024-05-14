@@ -6,15 +6,18 @@ import {
   CardHeader,
   Flex,
   Tooltip,
+  Skeleton,
 } from "@chakra-ui/react";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 
 export default function SummaryCard({
   title,
   value,
+  isLoading,
 }: {
   title: string;
-  value: string;
+  value: number | undefined;
+  isLoading: boolean;
 }) {
   return (
     <Card>
@@ -30,9 +33,13 @@ export default function SummaryCard({
         </Flex>
       </CardHeader>
       <CardBody>
-        <Text fontWeight={"bold"} fontSize={"4xl"}>
-          {value}
-        </Text>
+        {!isLoading ? (
+          <Text fontWeight={"bold"} fontSize={"4xl"}>
+            {value}
+          </Text>
+        ) : (
+          <Skeleton height="20px" />
+        )}
       </CardBody>
     </Card>
   );

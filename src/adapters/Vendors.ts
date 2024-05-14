@@ -1,13 +1,23 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { type MutationCallBack, type QueryCallBack } from "./helpers";
 import ApiService from "./ApiService";
-import { LoginSchema } from "@/lib/validations/authValidator";
+import {
+  type CreateVendorSchema,
+  type CreateVendorWalletSchema,
+  type FundVendorWalletSchema,
+  type WithdrawFromWalletSchema,
+} from "@/lib/validations/vendorValidator";
+import {
+  type AllVendors,
+  type VendorDetails,
+  type VendorWallet,
+} from "@/lib/types/Vendors";
 
 // api service initiliazer
-const authService = new ApiService("/login");
+const vendorService = new ApiService("");
 
 // mutation utility
-function useAuthMutation<T>(
+function useVendorMutation<T>(
   mutationCallback: MutationCallBack<T>,
   params: string
 ) {
@@ -18,13 +28,64 @@ function useAuthMutation<T>(
 
 /* query utility
  **other options from tanstack query can be added to this utility function** */
-// function useAuthQuery<B>(
-//   queryCallback: QueryCallBack<B>,
-//   queryKey: string[],
-//   slug: string
-// ) {
-//   return useQuery({
-//     queryKey: queryKey,
-//     queryFn: () => queryCallback(slug),
-//   });
-// }
+function useVendorQuery<B>(
+  queryCallback: QueryCallBack<B>,
+  queryKey: string[],
+  slug: string
+) {
+  return useQuery({
+    queryKey: queryKey,
+    queryFn: () => queryCallback(slug),
+  });
+}
+
+const VendorAdapter = {
+  createVendor: async function (payload: CreateVendorSchema, _params: string) {
+    const res = vendorService.mutate("create_vendor/", payload, "JSON", "POST");
+    return res;
+  },
+  createVendorWallet: async function (
+    payload: CreateVendorWalletSchema,
+    _params: string
+  ) {
+    const res = vendorService.mutate("create-wallet/", payload, "JSON", "POST");
+    return res;
+  },
+  getAllVendors: async function (_params: string) {
+    const res = vendorService.getAll<AllVendors>("/vendors/");
+    return res;
+  },
+  getVendorDetails: async function (params: string) {
+    const res = vendorService.getAll<VendorDetails>(
+      `/vendors-details/${params}/`
+    );
+    return res;
+  },
+  fundVendorWallet: async function (
+    payload: FundVendorWalletSchema & { reciever: number | undefined },
+    _params: string
+  ) {
+    const res = vendorService.mutate("fund_wallet/", payload, "JSON", "POST");
+    return res;
+  },
+  withdrawFromWallet: async function (
+    payload: WithdrawFromWalletSchema,
+    _params: string
+  ) {
+    const res = vendorService.mutate(
+      "withdraw_wallet/",
+      payload,
+      "JSON",
+      "POST"
+    );
+    return res;
+  },
+  getVendorWalletRecords: async function (vendorUsername: string) {
+    const res = vendorService.getAll<VendorWallet>(
+      `/wallet_records/${vendorUsername}/`
+    );
+    return res;
+  },
+};
+
+export { VendorAdapter, useVendorMutation, useVendorQuery };

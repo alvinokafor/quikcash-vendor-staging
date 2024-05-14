@@ -1,35 +1,41 @@
 import { Flex, Box, Select, Heading } from "@chakra-ui/react";
 import { Line } from "@ant-design/charts";
+import { Transaction } from "@/lib/types/Transactions";
+interface IProps {
+  isLoading: boolean;
+  chartData: Transaction[] | undefined;
+}
+export default function DailyCashInflow({ isLoading, chartData }: IProps) {
+  console.log(chartData);
+  function getFormattedDate(date: string) {
+    const formattedDate = Intl.DateTimeFormat("en-US", {
+      month: "long",
+    }).format(new Date(date));
 
-export default function DailyCashInflow() {
-  const data = [
-    { year: "1991", value: 3 },
-    { year: "1992", value: 4 },
-    { year: "1993", value: 3.5 },
-    { year: "1994", value: 5 },
-    { year: "1995", value: 4.9 },
-    { year: "1996", value: 6 },
-    { year: "1997", value: 7 },
-    { year: "1998", value: 9 },
-    { year: "1999", value: 13 },
-  ];
+    return formattedDate;
+  }
+
+  const data = chartData?.map((data) => ({
+    month: getFormattedDate(data?.transaction_date),
+    value: data.amount,
+  }));
 
   const props = {
     data,
-    xField: "year",
+    xField: "month",
     yField: "value",
   };
   return (
     <Box className="space-y-4">
       <Flex alignItems={"center"} justifyContent={"space-between"}>
-        <Heading size={"sm"}>Transaction Chart</Heading>
+        <Heading size={"sm"}>Monthly Transaction Chart</Heading>
 
-        <Select width={"150px"} variant="filled">
+        {/* <Select width={"150px"} variant="filled">
           <option value="daily">Daily</option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
           <option value="yearly">Yearly</option>
-        </Select>
+        </Select> */}
       </Flex>
       <Line {...props} />
     </Box>

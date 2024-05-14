@@ -1,59 +1,97 @@
-import { Heading, Flex, Text, Box, Grid, Badge } from "@chakra-ui/react";
+import { Heading, Flex, Text, Box, Grid, Skeleton } from "@chakra-ui/react";
 import { FundVendorModal, DisableVendingModal } from "../ui";
+import { type VendorWallet, type VendorDetails } from "@/lib/types/Vendors";
+import { getFormattedAmount, getFormattedDate } from "@/utils";
 
-export default function VendorInfo() {
+export default function VendorInfo({
+  vendor,
+  vendorWallet,
+  walletLoading,
+}: {
+  vendor: VendorDetails | undefined;
+  vendorWallet: VendorWallet | undefined;
+  walletLoading: boolean;
+}) {
   return (
     <Box className="space-y-4">
       <Flex alignItems={"center"} justifyContent={"space-between"}>
         <Flex direction={"column"}>
-          <Heading>Emeka Nkwo</Heading>
-          <Text>Account Balance: NGN 3,000,000.00</Text>
+          <Heading>{vendor?.vendor.username}</Heading>
+          <Text>
+            Account Balance:{" "}
+            {!walletLoading ? (
+              getFormattedAmount(
+                Number(vendorWallet?.vendor_wallet[0].balance),
+                "NGN"
+              )
+            ) : (
+              <Skeleton />
+            )}
+          </Text>
         </Flex>
 
         <Flex gap={4} alignItems={"center"}>
-          <FundVendorModal />
+          <FundVendorModal vendorId={vendor?.vendor.id} />
           <DisableVendingModal />
         </Flex>
       </Flex>
 
-      <Grid templateColumns="repeat(6, 1fr)" gap={6}>
-        <Flex direction={"column"} gap={2}>
+      <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+        {/* <Flex direction={"column"} gap={2}>
           <Heading size="xs" textTransform="uppercase">
             Username
           </Heading>
           <Text fontSize="sm">emekawalter</Text>
-        </Flex>
+        </Flex> */}
         <Flex direction={"column"} gap={2}>
           <Heading size="xs" textTransform="uppercase">
             Email
           </Heading>
-          <Text fontSize="sm">emeka@gmail.com</Text>
+          <Text fontSize="sm">{vendor?.vendor.email}</Text>
         </Flex>
         <Flex direction={"column"} gap={2}>
           <Heading size="xs" textTransform="uppercase">
-            User Type
+            User Role
           </Heading>
-          <Text fontSize="sm">Agent</Text>
+          <Text className="capitalize" fontSize="sm">
+            {vendor?.vendor.role}
+          </Text>
         </Flex>
         <Flex direction={"column"} gap={2}>
+          <Heading size="xs" textTransform="uppercase">
+            Wallet Type
+          </Heading>
+          <Text className="capitalize" fontSize="sm">
+            {!walletLoading ? (
+              vendorWallet?.vendor_wallet[0].walletType
+            ) : (
+              <Skeleton />
+            )}
+          </Text>
+        </Flex>
+        {/* <Flex direction={"column"} gap={2}>
           <Heading size="xs" textTransform="uppercase">
             Vending Status
           </Heading>
           <Text fontSize="sm">
             <Badge colorScheme={"green"}>Active</Badge>
           </Text>
-        </Flex>
-        <Flex direction={"column"} gap={2}>
+        </Flex> */}
+        {/* <Flex direction={"column"} gap={2}>
           <Heading size="xs" textTransform="uppercase">
             NMD Commission Rate(NGN)
           </Heading>
           <Text fontSize="sm">30,000.00</Text>
-        </Flex>
+        </Flex> */}
         <Flex direction={"column"} gap={2}>
           <Heading size="xs" textTransform="uppercase">
             Date Created
           </Heading>
-          <Text fontSize="sm">20th April, 2024</Text>
+          <Text fontSize="sm">
+            {vendor?.vendor.date_added
+              ? getFormattedDate(vendor?.vendor.date_added)
+              : "No Date"}
+          </Text>
         </Flex>
       </Grid>
     </Box>

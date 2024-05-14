@@ -13,17 +13,18 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { EyeClosed, EyeOpen } from "@/assets/icons";
-// import { apiPrivateInstance } from "@/config";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema, loginValidator } from "@/lib/validations/authValidator";
 import { UserContext, IUserContext } from "@/contexts/UserContext";
-import { AuthAdapter, useAuthMutation } from "@/adapters";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-// import { getErrorMessage } from "@/utils";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { User } from "@/lib/types/User";
 
 export default function LoginForm() {
   const toast = useToast();
+  const [isPending, setIsPending] = useState(false);
   const { setUser, setToken } = useContext(UserContext) as IUserContext;
   const navigate = useNavigate();
 
@@ -32,41 +33,106 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginValidator),
   });
 
-  const { isPending, mutateAsync } = useAuthMutation(AuthAdapter.login, "");
+  const watchFields = watch(["email", "password"]);
 
-  const handleLogin = async (data: LoginSchema) => {
-    try {
-      const res = await mutateAsync(data);
-      // setUser(res?.data);
-      // localStorage.setItem("user", JSON.stringify(res?.data));
-      setToken(res?.data);
-      localStorage.setItem("accessToken", JSON.stringify(res?.data.access));
-      navigate("/dashboard");
+  // const { mutateAsync, isPending } = useMutation({
+  //   mutationFn: (variables: LoginSchema) => AuthAdapter.login(variables, ""),
+  // });
+
+  // const { isPending, mutateAsync } = useAuthMutation(AuthAdapter.login, "");
+
+  // const handleLogin = async (data: LoginSchema) => {
+  //   try {
+  //     const res = await mutateAsync(data);
+  //     // setUser(res?.data);
+  //     // localStorage.setItem("user", JSON.stringify(res?.data));
+  //     setToken(res?.data);
+  //     localStorage.setItem("accessToken", JSON.stringify(res?.data.access));
+  //     navigate("/dashboard");
+  //     toast({
+  //       position: "top-right",
+  //       title: "Login Successful",
+  //       status: "success",
+  //       duration: 4000,
+  //       isClosable: true,
+  //       containerStyle: {
+  //         backgroundColor: "#027A48",
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast({
+  //       position: "top-right",
+  //       title: "Something went wrong",
+  //       // title: getErrorMessage(error) ?? "Something went wrong",
+  //       status: "error",
+  //       duration: 4000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
+
+  const handleLogin = () => {
+    if (!watchFields[0] || !watchFields[1]) {
       toast({
         position: "top-right",
-        title: "Login Successful",
-        status: "success",
-        duration: 4000,
-        isClosable: true,
-        containerStyle: {
-          backgroundColor: "#027A48",
-        },
-      });
-    } catch (error) {
-      console.log(error);
-      toast({
-        position: "top-right",
-        title: "Something went wrong",
-        // title: getErrorMessage(error) ?? "Something went wrong",
+        title: "Please fill in all form fields",
         status: "error",
         duration: 4000,
         isClosable: true,
       });
+      return;
     }
+    setIsPending(true);
+    axios
+      .post(`http://165.227.77.33:5001/api/login/`, {
+        email: watchFields[0],
+        password: watchFields[1],
+      })
+      .then((response) => {
+        const accesstoken = response.data.access;
+        const user: User = jwtDecode(accesstoken);
+        console.log(user);
+        //@ts-ignore
+        setUser(user);
+        setToken(accesstoken);
+        localStorage.setItem("accessToken", accesstoken);
+        localStorage.setItem("user", JSON.stringify(user));
+        setIsPending(false);
+        user.two_factor_enabled
+          ? toast({
+              position: "top-right",
+              title: "An OTP Has Been Sent to Your Email",
+              status: "success",
+              duration: 4000,
+              isClosable: true,
+            })
+          : toast({
+              position: "top-right",
+              title: "Login Successful",
+              status: "success",
+              duration: 4000,
+              isClosable: true,
+            });
+        user.two_factor_enabled
+          ? navigate(`/verify-email?email=${watchFields[0]}`)
+          : navigate("/dashboard");
+      })
+      .catch(() => {
+        setIsPending(false);
+        toast({
+          position: "top-right",
+          title: "Something went wrong",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+        });
+      });
   };
   return (
     <Box paddingTop={10}>

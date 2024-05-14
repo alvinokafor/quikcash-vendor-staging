@@ -1,31 +1,26 @@
 import { Grid } from "@chakra-ui/react";
 import { SummaryCard } from "@/components/partials";
 
-const summary = [
-  {
-    title: "Available Balance",
-    value: "500.3K",
-  },
-  {
-    title: "Total Vendors",
-    value: "40",
-  },
-  {
-    title: "Total Agents",
-    value: "12",
-  },
-  {
-    title: "Total Cashiers",
-    value: "15",
-  },
-];
+interface IProps {
+  total_vendor: number | undefined;
+  total_agent: number | undefined;
+  total_cashier: number | undefined;
+  isLoading: boolean;
+}
 
-export default function VendorSummaryCards() {
+export default function VendorSummaryCards({
+  total_vendor,
+  total_agent,
+  total_cashier,
+  isLoading,
+}: IProps) {
+  console.log(total_agent);
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-      {summary.map((item) => (
-        <SummaryCard key={item.title} title={item.title} value={item.value} />
-      ))}
+      <SummaryCard title={"Available Balance"} value={0} isLoading={isLoading} />
+      <SummaryCard title={"Total Vendors"} value={total_vendor} isLoading={isLoading} />
+      <SummaryCard title={"Total Agents"} value={total_agent} isLoading={isLoading} />
+      <SummaryCard title={"Total Cashiers"} value={total_cashier} isLoading={isLoading} />
     </Grid>
   );
 }
