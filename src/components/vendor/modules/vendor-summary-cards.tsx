@@ -14,13 +14,35 @@ export default function VendorSummaryCards({
   total_cashier,
   isLoading,
 }: IProps) {
-  console.log(total_agent);
   return (
-    <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-      <SummaryCard title={"Available Balance"} value={0} isLoading={isLoading} />
-      <SummaryCard title={"Total Vendors"} value={total_vendor} isLoading={isLoading} />
-      <SummaryCard title={"Total Agents"} value={total_agent} isLoading={isLoading} />
-      <SummaryCard title={"Total Cashiers"} value={total_cashier} isLoading={isLoading} />
+    <Grid
+      templateColumns={{
+        base: "repeat(1, 1fr)",
+        md: "repeat(2, 1fr)",
+        lg: "repeat(4, 1fr)",
+      }}
+      gap={4}
+    >
+      <SummaryCard
+        title={"Available Balance"}
+        value={0}
+        isLoading={isLoading}
+      />
+      <SummaryCard
+        title={"Total Vendors"}
+        value={total_vendor}
+        isLoading={isLoading}
+      />
+      <SummaryCard
+        title={"Total Agents"}
+        value={total_agent}
+        isLoading={isLoading}
+      />
+      <SummaryCard
+        title={"Total Cashiers"}
+        value={total_cashier}
+        isLoading={isLoading}
+      />
     </Grid>
   );
 }

@@ -22,6 +22,7 @@ export default function SideBar() {
       paddingInline={"16px"}
       borderRight="1px"
       borderColor={"#EAECF0"}
+      className="hidden xl:block"
     >
       <Flex alignItems={"center"}>
         <Image padding={"24px"} src={Logo} />

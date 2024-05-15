@@ -2,8 +2,8 @@ import { SEOWrapper, AppLayout } from "@/layouts";
 import { Box } from "@chakra-ui/react";
 import {
   DasboardSummaryCards,
-  TransactionsSummary,
-  VendorRevenueSummary,
+  // TransactionsSummary,
+  // VendorRevenueSummary,
 } from "@/components/dashboard/modules";
 import { DistrictSalesSummaryTable } from "@/components/dashboard/ui";
 
@@ -22,8 +22,8 @@ export default function Home() {
         <AppLayout>
           <Box className="space-y-8">
             <DasboardSummaryCards />
-            <TransactionsSummary />
-            <VendorRevenueSummary />
+            {/* <TransactionsSummary /> */}
+            {/* <VendorRevenueSummary /> */}
             <DistrictSalesSummaryTable />
           </Box>
         </AppLayout>

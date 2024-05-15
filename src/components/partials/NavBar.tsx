@@ -9,12 +9,25 @@ import {
   Text,
   Badge,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
 } from "@chakra-ui/react";
 import { ChevronRightIcon, ArrowLeftIcon } from "@radix-ui/react-icons";
-import { useLocation } from "react-router-dom";
 import { UserContext, type IUserContext } from "@/contexts/UserContext";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import Logout from "../auth/Logout";
+
+const navLinks = [
+  { name: "Dashboard", link: "/dashboard" },
+  { name: "Vendors", link: "/vendors" },
+  { name: "Transactions", link: "/transactions" },
+  { name: "Settings", link: "/settings" },
+  { name: "Help Center", link: "/help-center" },
+];
 
 export default function NavBar() {
   const location = useLocation();
@@ -76,6 +89,23 @@ export default function NavBar() {
             <Text fontWeight={"medium"}>{user?.username}</Text>
             <Badge className="uppercase">{user?.role}</Badge>
           </Flex>
+          <Box className="block xl:hidden">
+            <Menu>
+              <MenuButton as={Button}>
+                <HamburgerMenuIcon />
+              </MenuButton>
+              <MenuList>
+                {navLinks.map((link) => (
+                  <MenuItem key={link.name}>
+                    <Link to={`${link.link}`}>{link.name}</Link>
+                  </MenuItem>
+                ))}
+                <MenuItem>
+                  <Logout renderAs="text" />
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Box>
         </Flex>
       </Flex>
     </Box>

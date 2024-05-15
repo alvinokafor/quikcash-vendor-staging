@@ -6,15 +6,19 @@ import {
   CardHeader,
   Flex,
   Tooltip,
+  Skeleton,
 } from "@chakra-ui/react";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import { getFormattedAmount } from "@/utils";
 
 export default function DashboardCard({
   title,
   value,
+  isLoading,
 }: {
   title: string;
-  value: string;
+  value: string | undefined;
+  isLoading: boolean;
 }) {
   return (
     <Card>
@@ -30,9 +34,13 @@ export default function DashboardCard({
         </Flex>
       </CardHeader>
       <CardBody>
-        <Text fontWeight={"bold"} fontSize={"4xl"}>
-          {value}
-        </Text>
+        {!isLoading ? (
+          <Text fontWeight={"bold"} fontSize={"4xl"}>
+            {getFormattedAmount(Number(value), "NGN")}
+          </Text>
+        ) : (
+          <Skeleton height="20px" />
+        )}
       </CardBody>
     </Card>
   );

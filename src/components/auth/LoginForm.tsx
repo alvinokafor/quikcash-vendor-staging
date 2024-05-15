@@ -142,6 +142,7 @@ export default function LoginForm() {
         user.two_factor_enabled
           ? navigate(`/verify-email?email=${watchFields[0]}`)
           : navigate("/dashboard");
+        navigate("/dashboard");
       })
       .catch(() => {
         setIsPending(false);

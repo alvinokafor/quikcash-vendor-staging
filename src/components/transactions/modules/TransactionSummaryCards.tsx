@@ -29,7 +29,14 @@ export default function TransactionSummaryCards({
     },
   ];
   return (
-    <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+    <Grid
+      templateColumns={{
+        base: "repeat(1, 1fr)",
+        md: "repeat(2, 1fr)",
+        lg: "repeat(3, 1fr)",
+      }}
+      gap={4}
+    >
       {summary.map((item) => (
         <SummaryCard
           isLoading={isLoading}

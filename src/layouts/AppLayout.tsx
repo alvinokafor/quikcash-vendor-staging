@@ -7,10 +7,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <SideBar />
       <Box
         w="100%"
-        paddingLeft={"342px"}
         paddingBottom={"32px"}
         paddingRight={"32px"}
         className="space-y-4"
+        paddingLeft={{ base: "32px", xl: "342px" }}
       >
         <NavBar />
         {children}

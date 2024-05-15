@@ -15,7 +15,7 @@ import {
 import { ExitIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 
-export default function Logout() {
+export default function Logout({ renderAs = "button" }: { renderAs?: string }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
@@ -30,8 +30,8 @@ export default function Logout() {
   return (
     <>
       <Box
-        paddingInline={"12px"}
-        paddingBlock={"8px"}
+        paddingInline={renderAs === "button" ? "12px" : "0px"}
+        paddingBlock={renderAs === "button" ? "8px" : "opx"}
         borderRadius={"6px"}
         _hover={{
           bg: "gray.gray50",
@@ -40,11 +40,15 @@ export default function Logout() {
         onClick={onOpen}
       >
         <Flex alignItems={"center"}>
-          <Box mr={"12px"}>
-            <ExitIcon width={20} height={20} />
-          </Box>
+          {renderAs === "button" && (
+            <Box mr={"12px"}>
+              <ExitIcon width={20} height={20} />
+            </Box>
+          )}
 
-          <Text fontWeight={"medium"}>Logout</Text>
+          <Text fontWeight={renderAs === "button" ? "medium" : "regular"}>
+            Logout
+          </Text>
         </Flex>
       </Box>
       <Modal
