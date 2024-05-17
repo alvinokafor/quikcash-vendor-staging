@@ -30,12 +30,12 @@ export default function DasboardSummaryCards() {
       />
       <DashboardCard
         title={"Total Transaction Volume"}
-        value={"2300"}
+        value={"0"}
         isLoading={false}
       />
       <DashboardCard
         title={"Total Transfer Volume"}
-        value={"2300"}
+        value={"0"}
         isLoading={false}
       />
     </Grid>

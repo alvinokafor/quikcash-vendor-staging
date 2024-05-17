@@ -77,24 +77,24 @@ export default function LoginForm() {
   //   }
   // };
 
-  const handleSendOTP = async () => {
-    try {
-      await axios.post(
-        `http://165.227.77.33:5001/api/initiate-otp/`,
-        {
-          email: watchFields[0],
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleSendOTP = async () => {
+  //   try {
+  //     await axios.post(
+  //       `http://165.227.77.33:5001/api/initiate-otp/`,
+  //       {
+  //         email: watchFields[0],
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //         },
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleLogin = () => {
     if (!watchFields[0] || !watchFields[1]) {
@@ -123,25 +123,25 @@ export default function LoginForm() {
         localStorage.setItem("accessToken", accesstoken);
         localStorage.setItem("user", JSON.stringify(user));
         setIsPending(false);
-        handleSendOTP();
-        user.two_factor_enabled
-          ? toast({
-              position: "top-right",
-              title: "An OTP Has Been Sent to Your Email",
-              status: "success",
-              duration: 4000,
-              isClosable: true,
-            })
-          : toast({
-              position: "top-right",
-              title: "Login Successful",
-              status: "success",
-              duration: 4000,
-              isClosable: true,
-            });
-        user.two_factor_enabled
-          ? navigate(`/verify-email?email=${watchFields[0]}`)
-          : navigate("/dashboard");
+        // handleSendOTP();
+        // user.two_factor_enabled
+        //   ? toast({
+        //       position: "top-right",
+        //       title: "An OTP Has Been Sent to Your Email",
+        //       status: "success",
+        //       duration: 4000,
+        //       isClosable: true,
+        //     })
+        //   : toast({
+        //       position: "top-right",
+        //       title: "Login Successful",
+        //       status: "success",
+        //       duration: 4000,
+        //       isClosable: true,
+        //     });
+        // user.two_factor_enabled
+        //   ? navigate(`/verify-email?email=${watchFields[0]}`)
+        //   : navigate("/dashboard");
         navigate("/dashboard");
       })
       .catch(() => {
