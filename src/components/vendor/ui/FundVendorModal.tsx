@@ -30,11 +30,7 @@ export default function FundVendorModal({
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FundVendorWalletSchema>({
+  const { register, handleSubmit } = useForm<FundVendorWalletSchema>({
     resolver: zodResolver(fundVendorWalletValidator),
   });
 

@@ -1,5 +1,4 @@
-import { Heading } from "@radix-ui/themes";
-import { Card, CardHeader, CardBody, CardFooter, Text } from "@chakra-ui/react";
+import { Card, CardBody, Text } from "@chakra-ui/react";
 
 function App() {
   return (

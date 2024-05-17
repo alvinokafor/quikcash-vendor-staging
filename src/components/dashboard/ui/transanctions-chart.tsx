@@ -1,4 +1,4 @@
-import { Flex, Box, Select, Heading } from "@chakra-ui/react";
+import { Flex, Box, Heading } from "@chakra-ui/react";
 import { Line } from "@ant-design/charts";
 import { Transaction } from "@/lib/types/Transactions";
 interface IProps {
@@ -7,6 +7,7 @@ interface IProps {
 }
 export default function DailyCashInflow({ isLoading, chartData }: IProps) {
   console.log(chartData);
+  console.log(isLoading);
   function getFormattedDate(date: string) {
     const formattedDate = Intl.DateTimeFormat("en-US", {
       month: "long",
