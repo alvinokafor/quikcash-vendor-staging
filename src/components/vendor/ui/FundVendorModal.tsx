@@ -22,11 +22,12 @@ import {
   fundVendorWalletValidator,
 } from "@/lib/validations/vendorValidator";
 import { useVendorMutation, VendorAdapter } from "@/adapters/Vendors";
+import { Vendor, VendorDetails } from "@/lib/types/Vendors";
 
 export default function FundVendorModal({
-  vendorId,
+  vendor,
 }: {
-  vendorId: number | undefined;
+  vendor: VendorDetails | undefined;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -41,7 +42,10 @@ export default function FundVendorModal({
 
   const handleFundVendorWallet = async (data: FundVendorWalletSchema) => {
     try {
-      await mutateAsync({ amount: data.amount, reciever: vendorId });
+      await mutateAsync({
+        amount: data.amount,
+        receiver: vendor?.vendor.id,
+      });
       toast({
         position: "top-right",
         title: `Vendor Wallet has been funded`,
@@ -96,7 +100,7 @@ export default function FundVendorModal({
               colorScheme="blue"
               mr={3}
             >
-              Create
+              Fund
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

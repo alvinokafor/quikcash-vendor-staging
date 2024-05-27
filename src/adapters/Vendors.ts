@@ -12,6 +12,7 @@ import {
   type VendorDetails,
   type VendorWallet,
 } from "@/lib/types/Vendors";
+import { CurrentVendorDetails } from "@/lib/types/Transactions";
 
 // api service initiliazer
 const vendorService = new ApiService("");
@@ -62,7 +63,7 @@ const VendorAdapter = {
     return res;
   },
   fundVendorWallet: async function (
-    payload: FundVendorWalletSchema & { reciever: number | undefined },
+    payload: FundVendorWalletSchema & { receiver: string | number | undefined },
     _params: string
   ) {
     const res = vendorService.mutate("fund_wallet/", payload, "JSON", "POST");
@@ -83,6 +84,12 @@ const VendorAdapter = {
   getVendorWalletRecords: async function (vendorUsername: string) {
     const res = vendorService.getAll<VendorWallet>(
       `/wallet_records/${vendorUsername}/`
+    );
+    return res;
+  },
+  getCurrentVendorDetails: async function () {
+    const res = vendorService.getAll<CurrentVendorDetails>(
+      `/current_vendor_details/`
     );
     return res;
   },

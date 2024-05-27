@@ -17,7 +17,7 @@ export default function DashboardCard({
   isLoading,
 }: {
   title: string;
-  value: string | undefined;
+  value: string | number | undefined;
   isLoading: boolean;
 }) {
   return (

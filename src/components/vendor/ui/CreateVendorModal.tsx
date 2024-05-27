@@ -119,8 +119,9 @@ export default function CreateVendorModal() {
               <FormControl>
                 <FormLabel>User Role</FormLabel>
                 <Select {...register("user_role")} variant="filled">
-                  <option value="agent">Agent</option>
+                  <option value="vendor">Vendor</option>
                   <option value="sub_vendor">Sub Vendor</option>
+                  <option value="agent">Agent</option>
                   <option value="cashier">Cashier</option>
                 </Select>
                 <FormErrorMessage>

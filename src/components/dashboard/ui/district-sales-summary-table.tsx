@@ -20,36 +20,36 @@ import { DownloadIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 export default function DistrictSalesSummaryTable() {
   const districts = [
-    {
-      paying_district: "ADO EKITI",
-      gross_amount: "11,000.00",
-      net_amount: "12,000.00",
-      transaction_count: "400",
-    },
-    {
-      paying_district: "AGBOR",
-      gross_amount: "11,000.00",
-      net_amount: "12,000.00",
-      transaction_count: "400",
-    },
-    {
-      paying_district: "AKURE",
-      gross_amount: "11,000.00",
-      net_amount: "12,000.00",
-      transaction_count: "400",
-    },
-    {
-      paying_district: "ASABA",
-      gross_amount: "11,000.00",
-      net_amount: "12,000.00",
-      transaction_count: "400",
-    },
-    {
-      paying_district: "AUCHI",
-      gross_amount: "11,000.00",
-      net_amount: "12,000.00",
-      transaction_count: "400",
-    },
+    // {
+    //   paying_district: "ADO EKITI",
+    //   gross_amount: "11,000.00",
+    //   net_amount: "12,000.00",
+    //   transaction_count: "400",
+    // },
+    // {
+    //   paying_district: "AGBOR",
+    //   gross_amount: "11,000.00",
+    //   net_amount: "12,000.00",
+    //   transaction_count: "400",
+    // },
+    // {
+    //   paying_district: "AKURE",
+    //   gross_amount: "11,000.00",
+    //   net_amount: "12,000.00",
+    //   transaction_count: "400",
+    // },
+    // {
+    //   paying_district: "ASABA",
+    //   gross_amount: "11,000.00",
+    //   net_amount: "12,000.00",
+    //   transaction_count: "400",
+    // },
+    // {
+    //   paying_district: "AUCHI",
+    //   gross_amount: "11,000.00",
+    //   net_amount: "12,000.00",
+    //   transaction_count: "400",
+    // },
   ];
   return (
     <Box className="space-y-4">
@@ -72,12 +72,12 @@ export default function DistrictSalesSummaryTable() {
             CSV
           </Button>
 
-          <InputGroup>
+          {/* <InputGroup>
             <InputLeftElement pointerEvents="none">
               <MagnifyingGlassIcon width={20} height={20} />
             </InputLeftElement>
             <Input type="text" placeholder="Search" />
-          </InputGroup>
+          </InputGroup> */}
         </Flex>
       </Flex>
       <TableContainer className="h-full">
@@ -91,7 +91,7 @@ export default function DistrictSalesSummaryTable() {
               <Th>Transaction Count</Th>
             </Tr>
           </Thead>
-          <Tbody>
+          {/* <Tbody>
             {districts.map((district) => (
               <Tr key={district.paying_district}>
                 <Td>{district.paying_district}</Td>
@@ -100,7 +100,7 @@ export default function DistrictSalesSummaryTable() {
                 <Td>{district.transaction_count}</Td>
               </Tr>
             ))}
-          </Tbody>
+          </Tbody> */}
         </Table>
       </TableContainer>
     </Box>

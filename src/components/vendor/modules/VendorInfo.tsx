@@ -31,7 +31,7 @@ export default function VendorInfo({
         </Flex>
 
         <Flex gap={4} alignItems={"center"}>
-          <FundVendorModal vendorId={vendor?.vendor.id} />
+          <FundVendorModal vendor={vendor} />
           <DisableVendingModal />
         </Flex>
       </Flex>

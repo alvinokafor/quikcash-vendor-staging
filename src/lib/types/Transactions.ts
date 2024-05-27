@@ -41,3 +41,19 @@ export interface AllTransactions {
   total_sales: number;
   total_transactions: number;
 }
+
+export interface CurrentVendorDetails {
+  alluser_revenue_summary: {
+    email: string;
+    id: number;
+    total_amount: number;
+    total_commission: number;
+    total_net_amount: number;
+    total_transactions: number;
+    total_vat: number;
+    username: string;
+    vendor_name: string;
+  }[];
+  district_sale_sum: [];
+  transactions: [];
+}

@@ -4,8 +4,13 @@ import { useVendorQuery, VendorAdapter } from "@/adapters/Vendors";
 import { queryKeys } from "@/lib/constants";
 import { useContext } from "react";
 import { UserContext, type IUserContext } from "@/contexts/UserContext";
+import { AllTransactions } from "@/lib/types/Transactions";
 
-export default function DasboardSummaryCards() {
+export default function DasboardSummaryCards({
+  transactions,
+}: {
+  transactions: AllTransactions | undefined;
+}) {
   const { user } = useContext(UserContext) as IUserContext;
 
   const { data, isLoading } = useVendorQuery(
@@ -30,12 +35,12 @@ export default function DasboardSummaryCards() {
       />
       <DashboardCard
         title={"Total Transaction Volume"}
-        value={"0"}
+        value={transactions?.total_transactions}
         isLoading={false}
       />
       <DashboardCard
-        title={"Total Transfer Volume"}
-        value={"0"}
+        title={"Total Sales"}
+        value={transactions?.total_sales}
         isLoading={false}
       />
     </Grid>

@@ -41,6 +41,10 @@ const TransactionAdapter = {
     const res = transactionsService.getAll<Transaction>(`${params}/`);
     return res;
   },
+  getVendorTransactionSummary: async function (params: string) {
+    const res = transactionsService.getAll<Transaction>(`${params}/`);
+    return res;
+  },
 };
 
 export { TransactionAdapter, useTransactionQuery, useTransactionMutation };

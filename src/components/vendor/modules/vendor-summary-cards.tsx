@@ -18,16 +18,16 @@ export default function VendorSummaryCards({
     <Grid
       templateColumns={{
         base: "repeat(1, 1fr)",
-        md: "repeat(2, 1fr)",
-        lg: "repeat(4, 1fr)",
+        md: "repeat(3, 1fr)",
+        lg: "repeat(3, 1fr)",
       }}
       gap={4}
     >
-      <SummaryCard
+      {/* <SummaryCard
         title={"Available Balance"}
         value={0}
         isLoading={isLoading}
-      />
+      /> */}
       <SummaryCard
         title={"Total Vendors"}
         value={total_vendor}
