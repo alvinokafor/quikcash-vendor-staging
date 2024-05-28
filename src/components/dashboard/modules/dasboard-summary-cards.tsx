@@ -34,7 +34,7 @@ export default function DasboardSummaryCards({
         isLoading={isLoading}
       />
       <DashboardCard
-        title={"Total Transaction Volume"}
+        title={"Transaction Log"}
         value={transactions?.total_transactions}
         isLoading={false}
       />

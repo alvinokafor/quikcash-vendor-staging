@@ -13,6 +13,7 @@ import {
   useTransactionQuery,
   TransactionAdapter,
 } from "@/adapters/Transactions";
+import { useState } from "react";
 
 const metaData = {
   title: "QuikCash :: Dashboard",
@@ -21,10 +22,12 @@ const metaData = {
 };
 
 export default function Home() {
+  const [vendorRevenueFilter, setVendorRevenueFilter] = useState("");
+
   const { data, isLoading } = useVendorQuery(
     VendorAdapter.getCurrentVendorDetails,
-    [queryKeys.CURRENT_VENDOR_DETAILS],
-    ""
+    [queryKeys.CURRENT_VENDOR_DETAILS, vendorRevenueFilter],
+    vendorRevenueFilter
   );
 
   const allTransactions = useTransactionQuery(
@@ -40,7 +43,11 @@ export default function Home() {
           <Box className="space-y-8">
             <DasboardSummaryCards transactions={allTransactions.data} />
             {/* <TransactionsSummary /> */}
-            <VendorRevenueSummary isLoading={isLoading} data={data} />
+            <VendorRevenueSummary
+              isLoading={isLoading}
+              data={data}
+              setVendorRevenueFilter={setVendorRevenueFilter}
+            />
             <DistrictSalesSummaryTable />
           </Box>
         </AppLayout>

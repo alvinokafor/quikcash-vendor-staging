@@ -36,7 +36,9 @@ export default function DashboardCard({
       <CardBody>
         {!isLoading ? (
           <Text fontWeight={"bold"} fontSize={"4xl"}>
-            {getFormattedAmount(Number(value), "NGN")}
+            {title === "Vendor Balance"
+              ? getFormattedAmount(Number(value), "NGN")
+              : value}
           </Text>
         ) : (
           <Skeleton height="20px" />

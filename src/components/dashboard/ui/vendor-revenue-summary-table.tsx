@@ -17,13 +17,16 @@ import {
 import { DownloadIcon } from "@radix-ui/react-icons";
 import { getFormattedAmount } from "@/utils";
 import { toast } from "sonner";
+import { Dispatch, SetStateAction } from "react";
 
 export default function VendorRevenueSummaryTable({
   data,
   isLoading,
+  setVendorRevenueFilter,
 }: {
   data: CurrentVendorDetails | undefined;
   isLoading: boolean;
+  setVendorRevenueFilter: Dispatch<SetStateAction<string>>;
 }) {
   function convertToCSV() {
     try {
@@ -77,12 +80,16 @@ export default function VendorRevenueSummaryTable({
         <Heading size={"sm"}>Vendor Revenue Summary</Heading>
 
         <Flex alignItems={"center"} gap={4}>
-          {/* <Select width={"150px"} variant="filled">
+          <Select
+            onChange={(e) => setVendorRevenueFilter(e.target.value)}
+            width={"150px"}
+            variant="filled"
+          >
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
             <option value="yearly">Yearly</option>
-          </Select> */}
+          </Select>
 
           <Button
             fontWeight={"weight"}

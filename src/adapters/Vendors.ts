@@ -87,9 +87,9 @@ const VendorAdapter = {
     );
     return res;
   },
-  getCurrentVendorDetails: async function () {
+  getCurrentVendorDetails: async function (params: string) {
     const res = vendorService.getAll<CurrentVendorDetails>(
-      `/current_vendor_details/`
+      `/current_vendor_details/?filter=${params}`
     );
     return res;
   },
