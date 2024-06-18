@@ -23,6 +23,11 @@ import { Link } from "react-router-dom";
 import { Transaction } from "@/lib/types/Transactions";
 import { getFormattedDate } from "@/utils";
 import { toast } from "sonner";
+import {
+  useTransactionQuery,
+  TransactionAdapter,
+} from "@/adapters/Transactions";
+import { queryKeys } from "@/lib/constants";
 
 export default function TransactionTable({
   allTransactions,
@@ -31,6 +36,14 @@ export default function TransactionTable({
   allTransactions: Transaction[] | undefined;
   isLoading: boolean;
 }) {
+  const { data } = useTransactionQuery(
+    TransactionAdapter.getFundTransactions,
+    [queryKeys.FUND_TRANSACTIONS],
+    ""
+  );
+
+  console.log(data);
+
   function convertToCSV() {
     try {
       // Assuming data is an array of objects

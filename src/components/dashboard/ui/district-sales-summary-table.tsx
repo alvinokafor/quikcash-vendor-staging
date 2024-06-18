@@ -1,10 +1,10 @@
 import {
   Table,
   Thead,
-  Tbody,
+  // Tbody,
   Tr,
   Th,
-  Td,
+  // Td,
   TableCaption,
   TableContainer,
   Button,
@@ -12,45 +12,48 @@ import {
   Box,
   Heading,
   Select,
-  InputGroup,
-  InputLeftElement,
-  Input,
+  // InputGroup,
+  // InputLeftElement,
+  // Input,
 } from "@chakra-ui/react";
-import { DownloadIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import {
+  DownloadIcon,
+  // MagnifyingGlassIcon
+} from "@radix-ui/react-icons";
 
 export default function DistrictSalesSummaryTable() {
-  const districts = [
-    // {
-    //   paying_district: "ADO EKITI",
-    //   gross_amount: "11,000.00",
-    //   net_amount: "12,000.00",
-    //   transaction_count: "400",
-    // },
-    // {
-    //   paying_district: "AGBOR",
-    //   gross_amount: "11,000.00",
-    //   net_amount: "12,000.00",
-    //   transaction_count: "400",
-    // },
-    // {
-    //   paying_district: "AKURE",
-    //   gross_amount: "11,000.00",
-    //   net_amount: "12,000.00",
-    //   transaction_count: "400",
-    // },
-    // {
-    //   paying_district: "ASABA",
-    //   gross_amount: "11,000.00",
-    //   net_amount: "12,000.00",
-    //   transaction_count: "400",
-    // },
-    // {
-    //   paying_district: "AUCHI",
-    //   gross_amount: "11,000.00",
-    //   net_amount: "12,000.00",
-    //   transaction_count: "400",
-    // },
-  ];
+  // const districts = [
+  //   // {
+  //   //   paying_district: "ADO EKITI",
+  //   //   gross_amount: "11,000.00",
+  //   //   net_amount: "12,000.00",
+  //   //   transaction_count: "400",
+  //   // },
+  //   // {
+  //   //   paying_district: "AGBOR",
+  //   //   gross_amount: "11,000.00",
+  //   //   net_amount: "12,000.00",
+  //   //   transaction_count: "400",
+  //   // },
+  //   // {
+  //   //   paying_district: "AKURE",
+  //   //   gross_amount: "11,000.00",
+  //   //   net_amount: "12,000.00",
+  //   //   transaction_count: "400",
+  //   // },
+  //   // {
+  //   //   paying_district: "ASABA",
+  //   //   gross_amount: "11,000.00",
+  //   //   net_amount: "12,000.00",
+  //   //   transaction_count: "400",
+  //   // },
+  //   // {
+  //   //   paying_district: "AUCHI",
+  //   //   gross_amount: "11,000.00",
+  //   //   net_amount: "12,000.00",
+  //   //   transaction_count: "400",
+  //   // },
+  // ];
   return (
     <Box className="space-y-4">
       <Flex alignItems={"center"} justifyContent={"space-between"}>

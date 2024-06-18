@@ -8,6 +8,7 @@ import {
 
 // api service initiliazer
 const transactionsService = new ApiService("/transactions/");
+const fundTransactionsService = new ApiService("/fund-transactions/");
 
 // mutation utility
 function useTransactionMutation<T>(
@@ -35,6 +36,10 @@ function useTransactionQuery<B>(
 const TransactionAdapter = {
   getAllTransactions: async function (params: string) {
     const res = transactionsService.getAll<AllTransactions>(`${params}`);
+    return res;
+  },
+  getFundTransactions: async function (params: string) {
+    const res = fundTransactionsService.getAll<AllTransactions>(`${params}`);
     return res;
   },
   getTransaction: async function (params: string) {

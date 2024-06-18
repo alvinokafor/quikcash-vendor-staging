@@ -22,7 +22,7 @@ import {
   fundVendorWalletValidator,
 } from "@/lib/validations/vendorValidator";
 import { useVendorMutation, VendorAdapter } from "@/adapters/Vendors";
-import { Vendor, VendorDetails } from "@/lib/types/Vendors";
+import { VendorDetails } from "@/lib/types/Vendors";
 
 export default function FundVendorModal({
   vendor,

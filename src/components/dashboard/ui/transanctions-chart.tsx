@@ -6,7 +6,6 @@ interface IProps {
   chartData: Transaction[] | undefined;
 }
 export default function DailyCashInflow({ isLoading, chartData }: IProps) {
-  console.log(chartData);
   console.log(isLoading);
   function getFormattedDate(date: string) {
     const formattedDate = Intl.DateTimeFormat("en-US", {

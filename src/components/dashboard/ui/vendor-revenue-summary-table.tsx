@@ -13,20 +13,26 @@ import {
   Box,
   Heading,
   Select,
+  Spinner,
+  InputGroup,
+  InputLeftElement,
+  Input,
 } from "@chakra-ui/react";
-import { DownloadIcon } from "@radix-ui/react-icons";
 import { getFormattedAmount } from "@/utils";
 import { toast } from "sonner";
 import { Dispatch, SetStateAction } from "react";
+import { DownloadIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 export default function VendorRevenueSummaryTable({
   data,
   isLoading,
   setVendorRevenueFilter,
+  setSearchQuery,
 }: {
   data: CurrentVendorDetails | undefined;
   isLoading: boolean;
   setVendorRevenueFilter: Dispatch<SetStateAction<string>>;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
 }) {
   function convertToCSV() {
     try {
@@ -99,33 +105,58 @@ export default function VendorRevenueSummaryTable({
             Export CSV
           </Button>
         </Flex>
+
+        <InputGroup width={"300px"}>
+          <InputLeftElement pointerEvents="none">
+            <MagnifyingGlassIcon width={20} height={20} />
+          </InputLeftElement>
+          <Input
+            type="text"
+            placeholder="Search"
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </InputGroup>
       </Flex>
       <TableContainer className="h-full">
-        <Table variant="simple">
-          <TableCaption>Vendor Revenue Summary</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>Vendor</Th>
-              <Th>Gross Amount (NGN)</Th>
-              <Th>Net Amount (NGN)</Th>
-              <Th>Total Transaction Volume</Th>
-              <Th>Commission (NGN)</Th>
-              <Th>Total VAT (NGN)</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data?.alluser_revenue_summary.map((vendor) => (
-              <Tr key={vendor.id}>
-                <Td>{vendor.username}</Td>
-                <Td>{getFormattedAmount(vendor.total_amount, "NGN")}</Td>
-                <Td>{getFormattedAmount(vendor.total_net_amount, "NGN")}</Td>
-                <Td>{getFormattedAmount(vendor.total_transactions, "NGN")}</Td>
-                <Td>{getFormattedAmount(vendor.total_commission, "NGN")}</Td>
-                <Td> {getFormattedAmount(vendor.total_vat, "NGN")}</Td>
+        {!isLoading ? (
+          <Table variant="simple">
+            <TableCaption>Vendor Revenue Summary</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Vendor</Th>
+                <Th>Gross Amount (NGN)</Th>
+                <Th>Net Amount (NGN)</Th>
+                <Th>Total Transaction Volume</Th>
+                <Th>Commission (NGN)</Th>
+                <Th>Total VAT (NGN)</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {data?.alluser_revenue_summary.map((vendor) => (
+                <Tr key={vendor.id}>
+                  <Td>{vendor.username}</Td>
+                  <Td>{getFormattedAmount(vendor.total_amount, "NGN")}</Td>
+                  <Td>{getFormattedAmount(vendor.total_net_amount, "NGN")}</Td>
+                  <Td>
+                    {getFormattedAmount(vendor.total_transactions, "NGN")}
+                  </Td>
+                  <Td>{getFormattedAmount(vendor.total_commission, "NGN")}</Td>
+                  <Td> {getFormattedAmount(vendor.total_vat, "NGN")}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        ) : (
+          <Box className="mx-auto mt-20 w-max">
+            <Spinner
+              thickness="3px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="lg"
+            />
+          </Box>
+        )}
       </TableContainer>
     </Box>
   );

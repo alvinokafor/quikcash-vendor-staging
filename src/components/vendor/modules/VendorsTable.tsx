@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { Dispatch, useContext, SetStateAction } from "react";
 import {
   Table,
   Thead,
@@ -24,9 +24,11 @@ import { getFormattedDate } from "@/utils";
 export default function VendorsTable({
   allVendors,
   isLoading,
+  setFilter,
 }: {
   allVendors: Vendor[] | undefined;
   isLoading: boolean;
+  setFilter: Dispatch<SetStateAction<string>>;
 }) {
   const { user } = useContext(UserContext) as IUserContext;
 
@@ -37,11 +39,16 @@ export default function VendorsTable({
         <Heading size={"sm"}>Vendors</Heading>
 
         <Flex alignItems={"center"} gap={4}>
-          <Select width={"150px"} variant="filled">
-            <option value="yearly">All</option>
-            <option value="daily">Agent</option>
-            <option value="weekly">Vendor</option>
-            <option value="monthly">Cashier</option>
+          <Select
+            onChange={(e) => setFilter(e.target.value)}
+            width={"150px"}
+            variant="filled"
+          >
+            <option value="">All</option>
+            <option value="vendor">Vendor</option>
+            <option value="sub_vendor">Sub Vendor</option>
+            <option value="agent">Agent</option>
+            <option value="cashier">Cashier</option>
           </Select>
 
           <CreateVendorModal />

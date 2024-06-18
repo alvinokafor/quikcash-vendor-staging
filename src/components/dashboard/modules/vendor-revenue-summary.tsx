@@ -7,10 +7,12 @@ export default function VendorRevenueSummary({
   data,
   isLoading,
   setVendorRevenueFilter,
+  setSearchQuery,
 }: {
   data: CurrentVendorDetails | undefined;
   isLoading: boolean;
   setVendorRevenueFilter: Dispatch<SetStateAction<string>>;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
 }) {
   return (
     <Grid templateColumns="repeat(3, 1fr)" gap={6}>
@@ -19,6 +21,7 @@ export default function VendorRevenueSummary({
           data={data}
           isLoading={isLoading}
           setVendorRevenueFilter={setVendorRevenueFilter}
+          setSearchQuery={setSearchQuery}
         />
       </GridItem>
       {/* <GridItem colSpan={1}>

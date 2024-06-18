@@ -34,13 +34,13 @@ export default function DasboardSummaryCards({
         isLoading={isLoading}
       />
       <DashboardCard
-        title={"Transaction Log"}
-        value={transactions?.total_transactions}
+        title={"Total Prepaid Sales"}
+        value={transactions?.results.total_prepaid_sales}
         isLoading={false}
       />
       <DashboardCard
-        title={"Total Sales"}
-        value={transactions?.total_sales}
+        title={"Total Postpaid Sales"}
+        value={transactions?.results.total_postpaid_sales}
         isLoading={false}
       />
     </Grid>

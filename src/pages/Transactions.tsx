@@ -62,21 +62,21 @@ export default function Transactions() {
               setStartDateFilter={setStartDateFilter}
             />
             <TransactionSummaryCards
-              totalSales={data?.daily_total_sales}
+              totalSales={data?.results?.daily_total_sales}
               totalCredit={0}
-              totalComission={data?.total_commision}
+              totalComission={data?.results?.total_commision}
               isLoading={isLoading}
             />
             <TransactionsSummary
-              dailyComission={data?.daily_total_commission}
-              dailySales={data?.daily_total_sales}
+              dailyComission={data?.results?.daily_total_commission}
+              dailySales={data?.results?.daily_total_sales}
               dailyCredit={0}
               isLoading={isLoading}
-              chartData={data?.month_transactions}
+              chartData={data?.results?.month_transactions}
             />
             <TransactionTable
               isLoading={isLoading}
-              allTransactions={data?.data}
+              allTransactions={data?.results?.data}
             />
           </Box>
         </AppLayout>

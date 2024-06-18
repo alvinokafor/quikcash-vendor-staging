@@ -22,12 +22,13 @@ const metaData = {
 };
 
 export default function Home() {
-  const [vendorRevenueFilter, setVendorRevenueFilter] = useState("");
+  const [vendorRevenueFilter, setVendorRevenueFilter] = useState("daily");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isLoading } = useVendorQuery(
     VendorAdapter.getCurrentVendorDetails,
-    [queryKeys.CURRENT_VENDOR_DETAILS, vendorRevenueFilter],
-    vendorRevenueFilter
+    [queryKeys.CURRENT_VENDOR_DETAILS, vendorRevenueFilter, searchQuery],
+    `?fiter=${vendorRevenueFilter}&search=${searchQuery}`
   );
 
   const allTransactions = useTransactionQuery(
@@ -47,6 +48,7 @@ export default function Home() {
               isLoading={isLoading}
               data={data}
               setVendorRevenueFilter={setVendorRevenueFilter}
+              setSearchQuery={setSearchQuery}
             />
             <DistrictSalesSummaryTable />
           </Box>

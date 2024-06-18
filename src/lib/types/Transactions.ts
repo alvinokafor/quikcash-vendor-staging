@@ -33,13 +33,18 @@ export interface Transaction {
 }
 
 export interface AllTransactions {
-  data: Transaction[];
-  daily_total_commission: number | null;
-  daily_total_sales: number;
-  month_transactions: Transaction[];
-  total_commision: number;
-  total_sales: number;
-  total_transactions: number;
+  results: {
+    data: Transaction[];
+
+    daily_total_commission: number | null;
+    daily_total_sales: number;
+    month_transactions: Transaction[];
+    total_commision: number;
+    total_sales: number;
+    total_transactions: number;
+    total_prepaid_sales: number;
+    total_postpaid_sales: number;
+  };
 }
 
 export interface CurrentVendorDetails {

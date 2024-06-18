@@ -52,8 +52,8 @@ const VendorAdapter = {
     const res = vendorService.mutate("create-wallet/", payload, "JSON", "POST");
     return res;
   },
-  getAllVendors: async function (_params: string) {
-    const res = vendorService.getAll<AllVendors>("/vendors/");
+  getAllVendors: async function (params: string) {
+    const res = vendorService.getAll<AllVendors>(`/vendors/${params}`);
     return res;
   },
   getVendorDetails: async function (params: string) {
@@ -89,7 +89,7 @@ const VendorAdapter = {
   },
   getCurrentVendorDetails: async function (params: string) {
     const res = vendorService.getAll<CurrentVendorDetails>(
-      `/current_vendor_details/?filter=${params}`
+      `/current_vendor_details/${params}`
     );
     return res;
   },
