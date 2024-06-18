@@ -109,7 +109,7 @@ export default function LoginForm() {
     }
     setIsPending(true);
     axios
-      .post(`http://165.227.77.33:5001/api/login/`, {
+      .post(`${import.meta.env.VITE_BASE_API_URL as string}/api/login/`, {
         email: watchFields[0],
         password: watchFields[1],
       })
